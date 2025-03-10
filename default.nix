@@ -1,21 +1,26 @@
 let
-  getFlake = builtins.getFlake or getFlakeCompat;
-  getFlakeCompat =
-    path:
-    let
-      lock = builtins.fromJSON (builtins.readFile "${path}/flake.lock");
-      inherit (lock.nodes.flake-compat.locked)
-        owner
-        repo
-        rev
-        narHash
-        ;
-      flake-compat = fetchTarball {
-        url = "https://github.com/${owner}/${repo}/archive/${rev}.tar.gz";
-        sha256 = narHash;
-      };
-      flake = import flake-compat { src = path; };
-    in
-    flake.defaultNix;
+  sources = import ./npins;
+  pkgs = import sources.nixpkgs { };
+  craneLib = import sources.crane { inherit pkgs; };
+  src = craneLib.cleanCargoSource (craneLib.path ./.);
+  bareCommonArgs = {
+    inherit src;
+    nativeBuildInputs = with pkgs; [ installShellFiles ];
+    buildInputs = [ ];
+  };
+  cargoArtifacts = craneLib.buildDepsOnly bareCommonArgs;
+  commonArgs = bareCommonArgs // {
+    inherit cargoArtifacts;
+  };
 in
-getFlake (toString ./.)
+craneLib.buildPackage (
+  commonArgs
+    // {
+    postInstall = ''
+      installShellCompletion --cmd angrr \
+        --bash <($out/bin/angrr completion bash) \
+        --fish <($out/bin/angrr completion fish) \
+        --zsh <($out/bin/angrr completion zsh)
+    '';
+  }
+)

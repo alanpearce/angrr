@@ -1,0 +1,35 @@
+{
+  "pins": {
+    "crane": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "ipetkov",
+        "repo": "crane"
+      },
+      "branch": "master",
+      "revision": "bb1c9567c43e4434f54e9481eb4b8e8e0d50f0b5",
+      "url": "https://github.com/ipetkov/crane/archive/bb1c9567c43e4434f54e9481eb4b8e8e0d50f0b5.tar.gz",
+      "hash": "02hm1wfyjk9jdlbrjgrs8p4025b82m7jy768y7aysx2hj74d4514"
+    },
+    "flake-compat": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "edolstra",
+        "repo": "flake-compat"
+      },
+      "branch": "master",
+      "revision": "ff81ac966bb2cae68946d5ed5fc4994f96d0ffec",
+      "url": "https://github.com/edolstra/flake-compat/archive/ff81ac966bb2cae68946d5ed5fc4994f96d0ffec.tar.gz",
+      "hash": "19d2z6xsvpxm184m41qrpi1bplilwipgnzv9jy17fgw421785q1m"
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixpkgs-unstable",
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.05pre764610.2d9e4457f8e8/nixexprs.tar.xz",
+      "hash": "1b20cshhsxaxh7iryl52b2hnwpc0q1hz1g4mhy78149059436065"
+    }
+  },
+  "version": 3
+}
